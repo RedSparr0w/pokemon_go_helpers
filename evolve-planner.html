@@ -2,21 +2,62 @@
 <html>
 <head>
     <title>Evolve Planner for Pokemon Go</title>
+	<title>Steam Card Farmer</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="./include/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./include/css/normalize.css">
+	<link rel="stylesheet" href="./include/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./include/css/main.css">
+    <script src="./include/js/jquery.min.js"></script>
+	<script src="./include/js/tether.min.js"></script>
+	<script src="./include/js/bootstrap.min.js"></script>
     <style>
-        table {
-            border-collapse: collapse; /* To eliminate lines between shaded rows */
-            border: 1px solid black;
-            text-align: right;
-        }
-        th {
-            border: 1px solid black;
-            text-align: center;
-        }
-        tr:nth-child(4n), tr:nth-child(4n+1) { background: #CCC; }
+		.pokemonGrid{
+			text-align:center;
+		}
+		.pokeImage{
+			-moz-transition: all 0.3s;
+			-webkit-transition: all 0.3s;
+			transition: all 0.3s;
+			-moz-transform: translateZ(0) scale(0.9);
+			transform: translateZ(0) scale(0.9);
+			-webkit-transform: translateZ(0) scale(0.9);
+			-webkit-backface-visibility: hidden;
+			image-rendering: optimizeSpeed;             /*                     */
+			image-rendering: -moz-crisp-edges;          /* Firefox             */
+			image-rendering: -o-crisp-edges;            /* Opera               */
+			image-rendering: -webkit-optimize-contrast; /* Chrome (and Safari) */
+			image-rendering: optimize-contrast;         /* CSS3 Proposed       */
+			-ms-interpolation-mode: nearest-neighbor;   /* IE8+                */
+		}
+		.pokemonGrid:hover > *{
+			cursor: pointer !important;
+		}
+		.pokemonGrid:hover > .pokeImage{
+			-moz-transform: translateZ(0) scale(1.1);
+			transform: translateZ(0) scale(1.1);
+			-webkit-transform: translateZ(0) scale(1.1);
+			-webkit-backface-visibility: hidden;
+			image-rendering: optimizeSpeed;             /*                     */
+			image-rendering: -moz-crisp-edges;          /* Firefox             */
+			image-rendering: -o-crisp-edges;            /* Opera               */
+			image-rendering: -webkit-optimize-contrast; /* Chrome (and Safari) */
+			image-rendering: optimize-contrast;         /* CSS3 Proposed       */
+			-ms-interpolation-mode: nearest-neighbor;   /* IE8+                */
+		}
+		@media (max-width:543px){
+			.pokeCalculations{
+				display:none;
+			}
+		}
     </style>
 </head>
-<body ng-app="evolveForPokemonGo" ng-controller="Evovle as ev">
-    <h1>Evovle Planner for Pokemon Go</h1>
+<body ng-app="evolveForPokemonGo" ng-controller="Evolve as ev">
+    <h1>Evolve Planner for Pokemon Go</h1>
     <div>Intended to help decide how many Pokemon to transfer for candy to perpare for a lucky egg XP blitz. No affiliation with Niantic or Nintendo.</div>
     <p>Use at your own risk. Not responsible for mistakes. This is still under development. I'd like it to eventually be easy to use on mobile.</p>
     <p><a href="https://github.com/midnightfreddie/pokemon_go_helpers">Source code on GitHub</a></p>
@@ -29,53 +70,27 @@
         <li>But you may also want/need to transfer newly-evolved Pokemon to pay for more evolutions.</li>
     </ul>
     <h2>Planner/Calculator</h2>
-    <table style="white-space:pre-wrap;">
-        <tr>
-           <th>Pokemon</th>
-           <th>Count</th>
-           <th>Candy</th>
-           <th>Candy to
-Evolve</th>
-           <th>Num to
-Transfer</th>
-           <th>Num to
-Evolve</th>
-           <th>Count
-when done</th>
-           <th>Candy
-when done</th>
-           <th>XP when
-done</th>
-           <th>XP if
-Lucky Egg</th>
-        </tr>
-        <tr ng-repeat-start="pokemon in ev.pokechart">
-           <td>{{ pokemon.Pokemon }}</td>
-           <td><input type="text" size="3" ngPattern="\d+" ng-model="pokemon.count"></td>
-           <td><input type="text" size="3" ngPattern="\d+" ng-model="pokemon.candyCount"></td>
-           <td>{{ pokemon.Candy }}</td>
-           <td>{{ ev.ToTransfer(pokemon) }}</td>
-           <td>{{ pokemon.numToEvolve }}</td>
-           <td>{{ pokemon.numPokeAfter }}</td>
-           <td>{{ pokemon.candyCountAfter }}</td>
-           <td rowspan="2">{{ pokemon.Xp }}</td>
-           <td rowspan="2">{{ pokemon.Xp * 2 }}</td>
-        </tr>
-        <tr ng-repeat-end>
-           <td>to {{ pokemon.EvolveTo.join('\nor ') }}</td>
-           <td><input type="text" size="3" ngPattern="\d+" ng-model="pokemon.evolvedCount"></td>
-           <td>-</td>
-           <td>-</td>
-           <td>{{ pokemon.numEvPokeToTransfer }}</td>
-           <td>-</td>
-           <td>{{ pokemon.numEvPokeAfter }}</td>
-           <td>-</td>
-        </tr>
-        <tr>
-            <td>XP Totals</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>{{ ev.SumXP() }}</td><td>{{ ev.SumXP() * 2 }}</td>
-        </tr>
-
-    </table>
+    <div class="container-fluid">
+        <div ng-repeat="pokemon in ev.pokechart" class="col-lg-2 col-md-2 col-sm-4 col-xs-12 pokemonGrid">
+			<h2>{{ pokemon.Pokemon }}</h2>
+			<img ng-src="http://serebii.net/pokemongo/pokemon/{{ pokemon.Pokedex }}.png" class="pokeImage">
+			<div class="pokeCalculations">
+				<p>Amount<br/><input type="number" step="1" ngPattern="\d+" ng-model="pokemon.count"></p>
+				<p>Candy<br/><input type="text" step="1" ngPattern="\d+" ng-model="pokemon.candyCount"></p>
+				<p>Cost Per Evolve<br/>{{ pokemon.Candy }}</p>
+				<p>To Transfer<br/>{{ ev.ToTransfer(pokemon) }}</p>
+				<p>To Evolve<br/>{{ pokemon.numToEvolve }}</p>
+				<p>Amount Remaining<br/>{{ pokemon.numPokeAfter }}</p>
+				<p>Candy Remaining<br/>{{ pokemon.candyCountAfter }}</p>
+				<p rowspan="2">XP Gained</br>{{ pokemon.Xp }}</p>
+				<p rowspan="2">XP w/Lucky Egg</br>{{ pokemon.Xp * 2 }}</p>
+				<h4>{{ pokemon.EvolveTo.join('\nor ') }}</h4>
+				<p>Amount<br/><input type="number" step="1" ngPattern="\d+" ng-model="pokemon.evolvedCount"></p>
+				<p>To Transfer<br/>{{ pokemon.numEvPokeToTransfer }}</p>
+				<p>Amount Remaining<br/>{{ pokemon.numEvPokeAfter }}</p>
+			</div>
+        </div>
+    </div>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script>
         (function() {
@@ -83,11 +98,11 @@ Lucky Egg</th>
 
             angular
                 .module('evolveForPokemonGo', [])
-                .controller('Evovle', Evovle);
+                .controller('Evolve', Evolve);
 
-            Evovle.$inject = ["$http"];
+            Evolve.$inject = ["$http"];
 
-            function Evovle($http) {
+            function Evolve($http) {
                 var vm = this;
                 vm.pokechart = [];
 
@@ -108,16 +123,17 @@ Lucky Egg</th>
                     while (numPoke > 0 && Math.floor((numCandy + numEvPoke + numPoke -1) / pokemon.Candy ) > 0) {
                         if (numCandy >= pokemon.Candy) {
                             numCandy -= pokemon.Candy;
+                            numCandy += 1;
                             numPoke -= 1;
                             numToEvolve += 1;
                             numEvPoke += 1;
                         } else if (numEvPoke > 0) {
-                            numEvPoke -=1;
-                            numEvPokeToTransfer +=1;
+                            numEvPoke -= 1;
+                            numEvPokeToTransfer += 1;
                             numCandy += 1;
                         } else {
-                            numPoke -=1;
-                            numPokeToTransfer +=1;
+                            numPoke -= 1;
+                            numPokeToTransfer += 1;
                             numCandy += 1;
                         }
                     }
@@ -142,6 +158,10 @@ Lucky Egg</th>
                 });
             }
         })();
+		
+		$(document).on("click",".pokemonGrid h2, .pokemonGrid img",function(ev){
+			$(this).parent().find(".pokeCalculations").slideToggle();
+		});
     </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 [
   {
     "Pokemon": "Pidgey",
+	"Pokedex": "016",
     "Candy": "12",
     "EvolveTo": [
       "Pidgeotto"
@@ -8,6 +9,7 @@
   },
   {
     "Pokemon": "Caterpie",
+	"Pokedex": "010",
     "Candy": "12",
     "EvolveTo": [
       "Metapod"
@@ -15,6 +17,7 @@
   },
   {
     "Pokemon": "Weedle",
+	"Pokedex": "013",
     "Candy": "12",
     "EvolveTo": [
       "Kakuna"
@@ -22,6 +25,7 @@
   },
   {
     "Pokemon": "Rattata",
+	"Pokedex": "019",
     "Candy": "25",
     "EvolveTo": [
       "Raticate"
@@ -29,6 +33,7 @@
   },
   {
     "Pokemon": "Oddish",
+	"Pokedex": "043",
     "Candy": "25",
     "EvolveTo": [
       "Gloom"
@@ -36,6 +41,7 @@
   },
   {
     "Pokemon": "Eevee",
+	"Pokedex": "133",
     "Candy": "25",
     "EvolveTo": [
       "Vaporeon",

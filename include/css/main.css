@@ -1,0 +1,46 @@
+@font-face {
+	font-family:"Lobster";
+	src:url("../fonts/Lobster_1_4.ttf") format("truetype");
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"Brandon-Light";
+	src:url("../fonts/BrandonText-Light.otf") format("opentype");
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"Brandon-Thin";
+	src:url("../fonts/BrandonText-Thin.otf") format("opentype");
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"Brandon-Medium";
+	src:url("../fonts/BrandonText-Medium.otf") format("opentype");
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"Brandon-Regular";
+	src:url("../fonts/BrandonText-Regular.otf") format("opentype");
+	font-weight:normal;
+	font-style:normal;
+}
+.lobster {
+	font-family:Lobster;
+}
+body{
+	cursor:default;
+	background-color:#1b2838;
+	overflow: scroll;
+	overflow-x: hidden;
+	font-family: Brandon-Regular;
+	color:#EFEFEF;
+}
+input{
+	max-width:100%;
+	color:#000;
+	text-align:center;
+}
